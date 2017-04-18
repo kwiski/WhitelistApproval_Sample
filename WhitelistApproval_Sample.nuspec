@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>WhitelistApproval_Sample</id>
+    <version>1.0.0</version>
+    <authors>Mkwiecinski</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Utilize RES ONE Identity Director services to validate user requested software and update Workspace whitelist with file information and valid hash </description>
+    <summary>Summary of functionality and how to setup</summary>
+    <copyright>Copyright 2017</copyright>
+    <tags>Security Workspace Whitelist Hash</tags>
+    <packageTypes>
+      <packageType name="automation" version="0.0" />
+      <packageType name="Sample" version="0.0" />
+    </packageTypes>
+  </metadata>
+</package>

@@ -1,0 +1,1575 @@
+<?xml version="1.0"?>
+<!-- RES ONE Automation Building Blocks -->
+<!-- Created by demo-res\mkwiecinski_adm on 4/17/2017 5:30:32 PM -->
+<AutomationManager>
+	<buildingblock version="3.0">
+		<projects/>
+		<modules>
+			<module>
+				<properties>
+					<guid>{8040D213-08AA-4413-A3D9-C3C5447063AE}</guid>
+					<name>add file to whitelist</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.12</version>
+					<versioncomment/>
+					<properties>
+						<separators/>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelisting</name>
+							<description/>
+							<guid>{FF814C9B-1DE4-4F1E-A635-30E36A670F74}</guid>
+						</folder>
+					</folderpath>
+					<deleteusedresources>yes</deleteusedresources>
+				</properties>
+				<tasks>
+					<task hidden="yes">
+						<limitinvoke>no</limitinvoke>
+						<parameters>
+							<param>
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>hash</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>user</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>manager</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+						</parameters>
+						<conditions>
+							<condition guid="{AC8DA844-AC57-4606-8DB0-59C1CEB94295}">
+								<expressions/>
+							</condition>
+							<condition guid="{70D96EA0-9FBF-48DD-A2C6-3D81CF6E83DF}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+							<condition guid="{4DCB3096-F128-4E6A-B2D9-2B0D49C3219D}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+							<condition guid="{517837F9-B191-46B1-9075-E436A82D6662}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+						</conditions>
+						<variablescontainer></variablescontainer>
+					</task>
+					<task>
+						<properties>
+							<type>PWRSHELL</type>
+							<guid>{4DCB3096-F128-4E6A-B2D9-2B0D49C3219D}</guid>
+							<description>Execute Windows PowerShell Script</description>
+							<enabled>no</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<username/>
+							<password encrypted="yes"/>
+							<usescript>yes</usescript>
+							<source>$Path = "$env:temp\whitelist.xml"
+$Now = Get-Date –f yyyyMMddHHmmss 
+$XmlWriter = New-Object System.XMl.XmlTextWriter($Path,$Null)
+$xmlWriter.Formatting = 'Indented'
+$xmlWriter.Indentation = 1
+$XmlWriter.IndentChar = "`t"
+$xmlWriter.WriteStartDocument()
+$XmlWriter.WriteComment('RES ONE Workspace Building Block')
+$XmlWriter.WriteComment('Created by RES ONE Service Store')
+$xmlWriter.WriteStartElement('respowerfuse')
+    $guidgen =  [System.GUID]::NewGuid().ToString().ToUpper()
+    $guid = "{$guidgen}"
+    $XmlWriter.WriteElementString('version', '9.10.1.0')
+    $xmlWriter.WriteStartElement('buildingblock')
+    $xmlWriter.WriteStartElement('appguardauthorizedfiles')
+    $xmlWriter.WriteStartElement('item')
+    $XmlWriter.WriteElementString('authorizedfile', '*\$[App]')
+    $XmlWriter.WriteElementString('description', 'Automatically added by RES ONE Service Store. Application Requested by $[user] and approved by $[manager]')
+    $XmlWriter.WriteElementString('process', '*')
+    $XmlWriter.WriteElementString('operation', 'rx')
+    $XmlWriter.WriteElementString('learningmode', 'no')
+    $xmlWriter.WriteStartElement('accesscontrol')
+    $XmlWriter.WriteAttributeString('access_mode', "or")
+    $XmlWriter.WriteAttributeString('zone_mode', "or")
+    $xmlWriter.WriteStartElement('access')
+    $XmlWriter.WriteElementString('type', 'global')
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteStartElement('hashes')
+    $XmlWriter.WriteAttributeString('allowany', "no")
+    $xmlWriter.WriteStartElement('hash')    
+    $XmlWriter.WriteAttributeString('type', "SHA-256")
+    $XmlWriter.WriteElementString('value', '$[hash]')
+    $XmlWriter.WriteElementString('mod', $Now)
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteElementString('guid',$guid)
+    $xmlWriter.WriteElementString('enabled','yes')
+    $xmlWriter.WriteEndElement()
+$xmlWriter.WriteEndDocument()
+$xmlWriter.Flush()
+$xmlWriter.Close()</source>
+							<scriptext>ps1</scriptext>
+							<outputwidth>80</outputwidth>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<snapins/>
+							<overrideexecutionpolicy>no</overrideexecutionpolicy>
+							<usex86psonx64>no</usex86psonx64>
+						</settings>
+					</task>
+					<task>
+						<properties>
+							<type>PWRSHELL</type>
+							<guid>{517837F9-B191-46B1-9075-E436A82D6662}</guid>
+							<description>Execute Windows PowerShell Script</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<username/>
+							<password encrypted="yes"/>
+							<usescript>yes</usescript>
+							<source>$Path = "$env:temp\whitelist.xml"
+$Now = Get-Date –f yyyyMMddHHmmss 
+$XmlWriter = New-Object System.XMl.XmlTextWriter($Path,$Null)
+$xmlWriter.Formatting = 'Indented'
+$xmlWriter.Indentation = 1
+$XmlWriter.IndentChar = "`t"
+$xmlWriter.WriteStartDocument()
+$XmlWriter.WriteComment('RES ONE Workspace Building Block')
+$XmlWriter.WriteComment('Created by RES ONE Service Store')
+$xmlWriter.WriteStartElement('respowerfuse')
+    $guidgen =  [System.GUID]::NewGuid().ToString().ToUpper()
+    $guid = "{$guidgen}"
+    $XmlWriter.WriteElementString('version', '9.10.1.0')
+    $xmlWriter.WriteStartElement('buildingblock')
+    $xmlWriter.WriteStartElement('appguardauthorizedfiles')
+    $xmlWriter.WriteStartElement('item')
+    $XmlWriter.WriteElementString('authorizedfile', '*\$[App]')
+    $XmlWriter.WriteElementString('description', 'Automatically added by RES ONE Service Store. Application Requested by $[user] and approved by $[manager]')
+    $XmlWriter.WriteElementString('process', '*')
+    $XmlWriter.WriteElementString('operation', 'rx')
+    $XmlWriter.WriteElementString('learningmode', 'no')
+    $xmlWriter.WriteStartElement('accesscontrol')
+    $XmlWriter.WriteAttributeString('access_mode', "or")
+    $XmlWriter.WriteAttributeString('zone_mode', "or")
+    $xmlWriter.WriteStartElement('access')
+    $XmlWriter.WriteElementString('type', 'global')
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteStartElement('hashes')
+    $XmlWriter.WriteAttributeString('allowany', "no")
+    $xmlWriter.WriteStartElement('hash')    
+    $XmlWriter.WriteAttributeString('type', "SHA-256")
+    $XmlWriter.WriteElementString('value', '$[hash]')
+    $XmlWriter.WriteElementString('mod', $Now)
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteEndElement()
+    $xmlWriter.WriteElementString('guid',$guid)
+    $xmlWriter.WriteElementString('enabled','yes')
+    $xmlWriter.WriteEndElement()
+
+$xmlWriter.WriteEndDocument()
+$xmlWriter.Flush()
+$xmlWriter.Close()
+
+</source>
+							<scriptext>ps1</scriptext>
+							<outputwidth>80</outputwidth>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<snapins/>
+							<overrideexecutionpolicy>no</overrideexecutionpolicy>
+							<usex86psonx64>no</usex86psonx64>
+						</settings>
+					</task>
+					<task>
+						<properties>
+							<type>COMMAND</type>
+							<guid>{70D96EA0-9FBF-48DD-A2C6-3D81CF6E83DF}</guid>
+							<description>Execute "@[SCRIPT]"</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<commandline>@[SCRIPT]</commandline>
+							<username/>
+							<password encrypted="yes"/>
+							<loaduserprofile>no</loaduserprofile>
+							<usecmd>no</usecmd>
+							<redirect>no</redirect>
+							<failonerroutput>no</failonerroutput>
+							<validateexitcode>no</validateexitcode>
+							<validateexitcode>no</validateexitcode>
+							<failifexitcode>no</failifexitcode>
+							<exitcodes>0</exitcodes>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<terminatetree>no</terminatetree>
+							<grablogfile/>
+							<script>"%ProgramFiles(x86)%\RES Software\Workspace Manager\pwrtech.exe" /add "%temp%\whitelist.xml"</script>
+							<scriptext>cmd</scriptext>
+						</settings>
+					</task>
+				</tasks>
+			</module>
+			<module>
+				<properties>
+					<guid>{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}</guid>
+					<name>Download File</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.2</version>
+					<versioncomment>Updated version</versioncomment>
+					<properties>
+						<separators/>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelisting</name>
+							<description/>
+							<guid>{FF814C9B-1DE4-4F1E-A635-30E36A670F74}</guid>
+						</folder>
+					</folderpath>
+					<deleteusedresources>yes</deleteusedresources>
+				</properties>
+				<tasks>
+					<task hidden="yes">
+						<limitinvoke>no</limitinvoke>
+						<parameters>
+							<param>
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>url</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+						</parameters>
+						<conditions>
+							<condition guid="{B94E82D5-008D-4D27-B30C-B49FD231F3F9}">
+								<expressions/>
+							</condition>
+							<condition guid="{BF381E96-AF1A-416C-88CA-7F9841C814EC}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+						</conditions>
+						<variablescontainer><categories><category><guid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</guid><name>Whitelisting</name></category></categories><variables><variable><guid>{0D38FFE2-ED14-47E5-81C9-42BBC571A564}</guid><name>DownloadPath</name><description/><type>0</type><parentguid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</parentguid><details><value1>c:\windows\temp</value1></details></variable></variables></variablescontainer>
+					</task>
+					<task>
+						<properties>
+							<type>PWRSHELL</type>
+							<guid>{BF381E96-AF1A-416C-88CA-7F9841C814EC}</guid>
+							<description>Execute Windows PowerShell Script</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<username/>
+							<password encrypted="yes"/>
+							<usescript>yes</usescript>
+							<source>$strFileName = "^[DownloadPath]\$[App]"
+If (Test-Path $strFileName){
+	Remove-Item $strFileName
+}
+(new-object System.Net.WebClient).DownloadFile( '$[url]', $strFileName)</source>
+							<scriptext>ps1</scriptext>
+							<outputwidth>80</outputwidth>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<snapins/>
+							<overrideexecutionpolicy>no</overrideexecutionpolicy>
+							<usex86psonx64>no</usex86psonx64>
+						</settings>
+					</task>
+				</tasks>
+			</module>
+			<module>
+				<properties>
+					<guid>{7351C3A8-90C9-40E5-B69D-8528E8DDA365}</guid>
+					<name>Scan File</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.1</version>
+					<versioncomment>Updated version</versioncomment>
+					<properties>
+						<separators/>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelisting</name>
+							<description/>
+							<guid>{FF814C9B-1DE4-4F1E-A635-30E36A670F74}</guid>
+						</folder>
+					</folderpath>
+					<deleteusedresources>yes</deleteusedresources>
+				</properties>
+				<tasks>
+					<task hidden="yes">
+						<limitinvoke>no</limitinvoke>
+						<parameters>
+							<param>
+								<name>exitcode</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+						</parameters>
+						<conditions>
+							<condition guid="{0F6B911F-CD7F-43C9-9745-70FB56B72CBB}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<setparametertrue>no</setparametertrue>
+								<parametertrue></parametertrue>
+								<when>0</when>
+								<action>3</action>
+								<setparameter>no</setparameter>
+								<parameter></parameter>
+								<enabled>yes</enabled>
+							</condition>
+						</conditions>
+						<variablescontainer><categories><category><guid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</guid><name>Whitelisting</name></category></categories><variables><variable><guid>{0D38FFE2-ED14-47E5-81C9-42BBC571A564}</guid><name>DownloadPath</name><description/><type>0</type><parentguid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</parentguid><details><value1>c:\windows\temp</value1></details></variable></variables></variablescontainer>
+					</task>
+					<task>
+						<properties>
+							<type>COMMAND</type>
+							<guid>{0F6B911F-CD7F-43C9-9745-70FB56B72CBB}</guid>
+							<description>Execute "@[SCRIPT]"</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<commandline>@[SCRIPT]</commandline>
+							<username/>
+							<password encrypted="yes"/>
+							<loaduserprofile>no</loaduserprofile>
+							<usecmd>no</usecmd>
+							<redirect>no</redirect>
+							<failonerroutput>no</failonerroutput>
+							<validateexitcode>yes</validateexitcode>
+							<validateexitcode>yes</validateexitcode>
+							<failifexitcode>no</failifexitcode>
+							<exitcodes>0</exitcodes>
+							<setexitcodeparameter parse="no">$[exitcode]</setexitcodeparameter>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<terminatetree>no</terminatetree>
+							<grablogfile/>
+							<script>"%ProgramFiles%\Windows Defender\MpCmdRun" -Scan -ScanType 3 -DisableRemediation -File "^[DownloadPath]\$[App]"</script>
+							<scriptext>cmd</scriptext>
+						</settings>
+					</task>
+				</tasks>
+			</module>
+			<module>
+				<properties>
+					<guid>{D2B8BA88-3853-4BB7-8860-82D1BBE7F412}</guid>
+					<name>Hash file</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.1</version>
+					<versioncomment>Updated version</versioncomment>
+					<properties>
+						<separators/>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelisting</name>
+							<description/>
+							<guid>{FF814C9B-1DE4-4F1E-A635-30E36A670F74}</guid>
+						</folder>
+					</folderpath>
+					<deleteusedresources>yes</deleteusedresources>
+				</properties>
+				<tasks>
+					<task hidden="yes">
+						<limitinvoke>no</limitinvoke>
+						<parameters>
+							<param>
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>Hash</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+						</parameters>
+						<conditions>
+							<condition guid="{A1748961-8D17-4053-A98B-434AE4AB8227}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+						</conditions>
+						<variablescontainer><categories><category><guid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</guid><name>Whitelisting</name></category></categories><variables><variable><guid>{0D38FFE2-ED14-47E5-81C9-42BBC571A564}</guid><name>DownloadPath</name><description/><type>0</type><parentguid>{FB6BA6A2-DD58-464B-A3C0-21D65504B876}</parentguid><details><value1>c:\windows\temp</value1></details></variable></variables></variablescontainer>
+					</task>
+					<task>
+						<properties>
+							<type>PWRSHELL</type>
+							<guid>{A1748961-8D17-4053-A98B-434AE4AB8227}</guid>
+							<description>Execute Windows PowerShell Script</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<username/>
+							<password encrypted="yes"/>
+							<usescript>yes</usescript>
+							<source>$strFileName = "^[DownloadPath]\$[App]"
+Get-FileHash $strFileName -Algorithm SHA256 | foreach { $_.Hash }</source>
+							<scriptext>ps1</scriptext>
+							<outputwidth>80</outputwidth>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<setoutparameter parse="no">$[Hash]</setoutparameter>
+							<snapins/>
+							<overrideexecutionpolicy>no</overrideexecutionpolicy>
+							<usex86psonx64>no</usex86psonx64>
+						</settings>
+					</task>
+				</tasks>
+			</module>
+			<module>
+				<properties>
+					<guid>{C728630B-C0FB-41D0-9257-2BBBEEB3ABD1}</guid>
+					<name>Set Scan Result</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.0</version>
+					<versioncomment>Initial version</versioncomment>
+					<properties>
+						<separators/>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelisting</name>
+							<description/>
+							<guid>{FF814C9B-1DE4-4F1E-A635-30E36A670F74}</guid>
+						</folder>
+					</folderpath>
+					<deleteusedresources>yes</deleteusedresources>
+				</properties>
+				<tasks>
+					<task hidden="yes">
+						<limitinvoke>no</limitinvoke>
+						<parameters>
+							<param>
+								<name>exitcode</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+							<param>
+								<name>safe</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<selection/>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+							</param>
+						</parameters>
+						<conditions>
+							<condition guid="{4778DA37-7FC9-427F-A727-37A18E53D881}">
+								<expressions/>
+								<operator>AND</operator>
+								<actiontrue>3</actiontrue>
+								<when>0</when>
+								<action>3</action>
+								<enabled>yes</enabled>
+							</condition>
+						</conditions>
+						<variablescontainer></variablescontainer>
+					</task>
+					<task>
+						<properties>
+							<type>COMMAND</type>
+							<guid>{4778DA37-7FC9-427F-A727-37A18E53D881}</guid>
+							<description>Execute "@[SCRIPT]"</description>
+							<enabled>yes</enabled>
+							<comments/>
+							<onerror>fail</onerror>
+						</properties>
+						<settings>
+							<commandline>@[SCRIPT]</commandline>
+							<username/>
+							<password encrypted="yes"/>
+							<loaduserprofile>no</loaduserprofile>
+							<usecmd>yes</usecmd>
+							<redirect>no</redirect>
+							<failonerroutput>no</failonerroutput>
+							<validateexitcode>no</validateexitcode>
+							<validateexitcode>no</validateexitcode>
+							<failifexitcode>no</failifexitcode>
+							<exitcodes>0</exitcodes>
+							<setoutparameter parse="no">$[safe]</setoutparameter>
+							<timeout>10</timeout>
+							<terminate>no</terminate>
+							<terminatetree>no</terminatetree>
+							<grablogfile/>
+							<script>@echo off
+if "$[exitcode]" == "0" goto SAFE
+echo unsafe
+@echo off
+goto end
+:SAFE
+echo safe
+:end
+</script>
+							<scriptext>cmd</scriptext>
+						</settings>
+					</task>
+				</tasks>
+			</module>
+		</modules>
+		<resources/>
+		<runbooks>
+			<runbook>
+				<properties>
+					<guid>{603536EC-15A3-4680-A234-504FE21C117E}</guid>
+					<name>Add to Whitelist</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.2</version>
+					<versioncomment>Updated version</versioncomment>
+					<properties>
+						<parameters>
+							<param ref="module" guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" name="add file to whitelist" linked="no">
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" type="module" linktype="0">
+										<param>App</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" name="add file to whitelist" linked="no">
+								<name>hash</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" type="module" linktype="0">
+										<param>hash</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" name="add file to whitelist" linked="no">
+								<name>manager</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" type="module">
+										<param>manager</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" name="add file to whitelist" linked="no">
+								<name>user</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{8040D213-08AA-4413-A3D9-C3C5447063AE}" type="module">
+										<param>user</param>
+									</module>
+								</selection>
+							</param>
+						</parameters>
+						<jobs>
+							<job>
+								<guid>{4B5958B1-4762-479C-91DB-4EE3CF600DF5}</guid>
+								<properties>
+									<enabled>yes</enabled>
+									<name>Add to Whitelist</name>
+									<timeout>0</timeout>
+									<offlineagentsnextboot>no</offlineagentsnextboot>
+									<wol>no</wol>
+									<selectoneagent>no</selectoneagent>
+									<what type="module">{8040D213-08AA-4413-A3D9-C3C5447063AE}</what>
+									<whatname>add file to whitelist</whatname>
+									<who type="agent">{22A817E2-0877-4B3C-95AE-87FEBD3845D3}</who>
+									<use_runbookparam>no</use_runbookparam>
+									<whoname>HONEYPOT</whoname>
+									<onerror>fail</onerror>
+								</properties>
+							</job>
+						</jobs>
+						<separators/>
+						<limitinvoke>no</limitinvoke>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelist</name>
+							<description/>
+							<guid>{4234A675-85F6-4670-B85D-F639E39A25E8}</guid>
+						</folder>
+					</folderpath>
+				</properties>
+			</runbook>
+			<runbook>
+				<properties>
+					<guid>{ED8AE978-926E-4B6F-B100-2CD64EE17D2B}</guid>
+					<name>Download Scan and Hash</name>
+					<enabled>yes</enabled>
+					<description/>
+					<version>1.0.3</version>
+					<versioncomment>Updated version</versioncomment>
+					<properties>
+						<parameters>
+							<param ref="module" guid="{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}" name="Download File" linked="no">
+								<name>App</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}" type="module" linktype="0">
+										<param>App</param>
+									</module>
+									<module guid="{D2B8BA88-3853-4BB7-8860-82D1BBE7F412}" type="module" linktype="0">
+										<param>App</param>
+									</module>
+									<module guid="{7351C3A8-90C9-40E5-B69D-8528E8DDA365}" type="module" linktype="0">
+										<param>App</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}" name="Download File" linked="no">
+								<name>url</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}" type="module" linktype="0">
+										<param>url</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{D2B8BA88-3853-4BB7-8860-82D1BBE7F412}" name="Hash file" linked="no">
+								<name>Hash</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{D2B8BA88-3853-4BB7-8860-82D1BBE7F412}" type="module" linktype="2">
+										<param>Hash</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{7351C3A8-90C9-40E5-B69D-8528E8DDA365}" name="Scan File" linked="no">
+								<name>exitcode</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{7351C3A8-90C9-40E5-B69D-8528E8DDA365}" type="module" linktype="2">
+										<param>exitcode</param>
+									</module>
+									<module guid="{C728630B-C0FB-41D0-9257-2BBBEEB3ABD1}" type="module">
+										<param>exitcode</param>
+									</module>
+								</selection>
+							</param>
+							<param ref="module" guid="{C728630B-C0FB-41D0-9257-2BBBEEB3ABD1}" name="Set Scan Result" linked="no">
+								<name>safe</name>
+								<value1/>
+								<value2/>
+								<value3/>
+								<type>0</type>
+								<description/>
+								<hint>Please provide the necessary input</hint>
+								<inputtiming>
+									<importbb showprev="no" eraseprev="no">no</importbb>
+									<schedulejob showprev="yes" eraseprev="no">yes</schedulejob>
+								</inputtiming>
+								<inputoptions>
+									<confirm>no</confirm>
+									<force>no</force>
+									<required>no</required>
+									<validation>no</validation>
+								</inputoptions>
+								<selection>
+									<module guid="{C728630B-C0FB-41D0-9257-2BBBEEB3ABD1}" type="module" linktype="2">
+										<param>safe</param>
+									</module>
+								</selection>
+							</param>
+						</parameters>
+						<jobs>
+							<job>
+								<guid>{09DB31B2-5C78-46BB-8422-F1FDB2E2A260}</guid>
+								<properties>
+									<enabled>yes</enabled>
+									<name>Download</name>
+									<timeout>0</timeout>
+									<offlineagentsnextboot>no</offlineagentsnextboot>
+									<wol>no</wol>
+									<selectoneagent>no</selectoneagent>
+									<what type="module">{69658A9F-13E5-4FD4-8025-E7B0A1E2D2B4}</what>
+									<whatname>Download File</whatname>
+									<who type="agent">{22A817E2-0877-4B3C-95AE-87FEBD3845D3}</who>
+									<use_runbookparam>no</use_runbookparam>
+									<whoname>HONEYPOT</whoname>
+									<onerror>fail</onerror>
+								</properties>
+							</job>
+							<job>
+								<guid>{B23D6D16-9658-475E-957E-6BD98A34CCEC}</guid>
+								<properties>
+									<enabled>yes</enabled>
+									<name>Scan</name>
+									<timeout>0</timeout>
+									<offlineagentsnextboot>no</offlineagentsnextboot>
+									<wol>no</wol>
+									<selectoneagent>no</selectoneagent>
+									<what type="module">{7351C3A8-90C9-40E5-B69D-8528E8DDA365}</what>
+									<whatname>Scan File</whatname>
+									<who type="agent">{22A817E2-0877-4B3C-95AE-87FEBD3845D3}</who>
+									<use_runbookparam>no</use_runbookparam>
+									<whoname>HONEYPOT</whoname>
+									<onerror>fail</onerror>
+								</properties>
+							</job>
+							<job>
+								<guid>{CE475EB6-8FD5-45AA-B2C5-D5ACC78F8ACE}</guid>
+								<properties>
+									<enabled>yes</enabled>
+									<name>Hash</name>
+									<timeout>0</timeout>
+									<offlineagentsnextboot>no</offlineagentsnextboot>
+									<wol>no</wol>
+									<selectoneagent>no</selectoneagent>
+									<what type="module">{D2B8BA88-3853-4BB7-8860-82D1BBE7F412}</what>
+									<whatname>Hash file</whatname>
+									<who type="agent">{22A817E2-0877-4B3C-95AE-87FEBD3845D3}</who>
+									<use_runbookparam>no</use_runbookparam>
+									<whoname>HONEYPOT</whoname>
+									<onerror>fail</onerror>
+								</properties>
+							</job>
+							<job>
+								<guid>{56402D81-8DA6-4001-ACEF-29BC3B3FD2C3}</guid>
+								<properties>
+									<enabled>yes</enabled>
+									<name>Evaluate Scan Results</name>
+									<timeout>0</timeout>
+									<offlineagentsnextboot>no</offlineagentsnextboot>
+									<wol>no</wol>
+									<selectoneagent>no</selectoneagent>
+									<what type="module">{C728630B-C0FB-41D0-9257-2BBBEEB3ABD1}</what>
+									<whatname>Set Scan Result</whatname>
+									<who type="agent">{22A817E2-0877-4B3C-95AE-87FEBD3845D3}</who>
+									<use_runbookparam>no</use_runbookparam>
+									<whoname>HONEYPOT</whoname>
+									<onerror>fail</onerror>
+								</properties>
+							</job>
+						</jobs>
+						<separators/>
+						<limitinvoke>no</limitinvoke>
+					</properties>
+					<folderpath>
+						<folder>
+							<name>Whitelist</name>
+							<description/>
+							<guid>{4234A675-85F6-4670-B85D-F639E39A25E8}</guid>
+						</folder>
+					</folderpath>
+				</properties>
+			</runbook>
+		</runbooks>
+		<teams>
+			<team>
+				<guid>{C962D81D-0DC7-406A-85A1-73AA4EC2F2C4}</guid>
+				<name>10.108.123.xxx</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<limitaddtoteam>no</limitaddtoteam>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{9CBFF62F-6069-4283-B734-F37C7AED4018}">
+								<operand>IP Address</operand>
+								<operator>SUBNET</operator>
+								<value>10.108.123.192	0	255.255.255.192</value>
+								<type>12</type>
+							</expression>
+						</expressions>
+					</rules>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{3E9D2828-25CD-455F-B918-BF34572FDDE9}</guid>
+				<name>10.108.129.xxx</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<limitaddtoteam>no</limitaddtoteam>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{A30DAB9C-D2D5-442A-A9B5-E5B3FD0BE77A}">
+								<operand>IP Address</operand>
+								<operator>SUBNET</operator>
+								<value>10.108.129.192	0	255.255.255.192</value>
+								<type>12</type>
+							</expression>
+						</expressions>
+					</rules>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{162542D6-B1A3-48B8-8748-5CCFE9CF577D}</guid>
+				<name>10.108.170.xxx</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{FC37B9EB-1254-49E2-A60C-9AE00B275A29}">
+								<operand>IP Address</operand>
+								<operator>SUBNET</operator>
+								<value>10.108.170.1	0	255.255.255.192</value>
+								<type>12</type>
+							</expression>
+						</expressions>
+					</rules>
+					<limitaddtoteam>no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{413E3848-4E4F-43BA-B9CD-AEA7184C47D1}</guid>
+				<name>10.108.33.xxx</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<limitaddtoteam>no</limitaddtoteam>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{DEEC9D36-52D5-40A5-9433-A0E9E3991C34}">
+								<operand>IP Address</operand>
+								<operator>SUBNET</operator>
+								<value>10.108.33.1	0	255.255.255.192</value>
+								<type>12</type>
+							</expression>
+						</expressions>
+					</rules>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{846CC0A0-7B57-4E04-8D2A-68313D886A35}</guid>
+				<name>Active Directory Servers</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{E686C718-78F2-463F-AAAA-49EBB954AAD6}</guid>
+				<name>All Servers</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{127A3802-D2FD-490F-9949-D6842B4CCB89}</guid>
+				<name>BigFix Servers</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam>no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{22365353-7D0D-43EA-9675-9E57D22A7867}</guid>
+				<name>Citrix XenDesktop</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{43DBD728-94E2-484A-980B-4534C4ABD967}</guid>
+				<name>Horizon View Non-persistant VDI's</name>
+				<enabled>yes</enabled>
+				<description>Only temporary use, for installing ROW Language Pack @ boot, until we get the images updated.
+
+Mantis #116</description>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules>
+						<operator>OR</operator>
+						<expressions>
+							<expression guid="{626DD057-9161-4BC8-854B-82A7AA470E07}">
+								<operand>Fully Qualified Domain Name</operand>
+								<operator>LIKE</operator>
+								<value>WIN7VIEW*</value>
+								<type>9</type>
+							</expression>
+							<expression guid="{570D79CB-A340-414B-B906-A93ADCA01E31}">
+								<operand>Fully Qualified Domain Name</operand>
+								<operator>LIKE</operator>
+								<value>WIN8VIEW*</value>
+								<type>9</type>
+							</expression>
+						</expressions>
+					</rules>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{208EA0FD-701B-4B77-A579-3A6BB1A4398A}</guid>
+				<name>HR Systems</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{3B57E9C9-238E-47C1-B52E-210D78A21791}</guid>
+				<name>Mail Servers</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{6934F076-7750-4B09-8A89-100EFB631396}</guid>
+				<name>MSSQL Server</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{90EA2010-56D5-45E4-A929-25D1076C5DDB}</guid>
+				<name>Powershell 3.0</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{CC4E99D5-9F9C-46D5-9B70-F34F206BDEEB}</guid>
+				<name>Powershell 4.0</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{299311C1-5B5A-416C-8477-7E055E73DA23}</guid>
+				<name>Python</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{A3C6F058-013F-4510-90B3-255CC3A698E4}</guid>
+				<name>Test</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam>no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{B1F24036-E2C3-4955-BE9D-3D0228E800C6}</guid>
+				<name>VDI</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>yes</autosetasprimary>
+				<team>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{1A576970-6CC0-4515-B4D3-B2EB79403A5A}">
+								<operand>Fully Qualified Domain Name</operand>
+								<operator>LIKE</operator>
+								<value>WIN*.DEMO-RES.com</value>
+								<type>9</type>
+							</expression>
+						</expressions>
+					</rules>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{CE9B7321-21D9-4B26-A755-2245E2A9FD4F}</guid>
+				<name>VMware PowerCLI</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules/>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+			<team>
+				<guid>{0647AB8E-4868-4830-B727-4A68B327512E}</guid>
+				<name>Windows 8</name>
+				<enabled>yes</enabled>
+				<description/>
+				<autosetasprimary>no</autosetasprimary>
+				<team>
+					<rules>
+						<operator>AND</operator>
+						<expressions>
+							<expression guid="{D2F8450E-6D12-40CD-B4BF-3F8501212DCD}">
+								<operator>=</operator>
+								<value>Windows8.1#-1</value>
+								<type>1</type>
+							</expression>
+						</expressions>
+					</rules>
+					<limitaddtoteam useglobalsettings="yes">no</limitaddtoteam>
+				</team>
+				<properties>
+					<variablescontainer>
+						<categories/>
+						<variables/>
+					</variablescontainer>
+					<folderpath/>
+				</properties>
+				<globalvars/>
+			</team>
+		</teams>
+		<projectfolders/>
+		<modulefolders/>
+		<resourcefolders/>
+		<runbookfolders>
+			<folder>
+				<guid>{4234A675-85F6-4670-B85D-F639E39A25E8}</guid>
+				<name>Whitelist</name>
+				<description/>
+				<parent/>
+			</folder>
+		</runbookfolders>
+		<teamfolders/>
+	</buildingblock>
+</AutomationManager>
